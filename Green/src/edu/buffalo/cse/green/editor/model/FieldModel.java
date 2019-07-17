@@ -91,6 +91,6 @@ public class FieldModel extends MemberModel<AbstractModel, CompartmentModel, IFi
 	 * @return The <code>IField</code> modeled by this model.
 	 */
 	public IField getField() {
-		return (IField) getMember();
+		return getMember();
 	}
 }

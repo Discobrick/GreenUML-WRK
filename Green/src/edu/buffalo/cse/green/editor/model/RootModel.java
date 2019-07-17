@@ -39,7 +39,6 @@ import edu.buffalo.cse.green.editor.DiagramEditor;
 import edu.buffalo.cse.green.editor.controller.RelationshipPart;
 import edu.buffalo.cse.green.editor.controller.RootPart;
 import edu.buffalo.cse.green.editor.model.commands.DeleteCommand;
-import edu.buffalo.cse.green.logging.UmlLog;
 import edu.buffalo.cse.green.relationships.RelationshipCache;
 import edu.buffalo.cse.green.xml.XMLConverter;
 
@@ -296,7 +295,7 @@ public class RootModel extends AbstractModel<AbstractModel, AbstractModel, IJava
 	 * Adds a model-to-element mapping.
 	 */
 	public AbstractModel getModelFromElement(IJavaElement element) {
-		return (AbstractModel) _cache.getModel(element);
+		return _cache.getModel(element);
 	}
 
 	// -Load /
@@ -376,7 +375,7 @@ public class RootModel extends AbstractModel<AbstractModel, AbstractModel, IJava
 		List<AbstractModel> queueToCheck = new ArrayList<AbstractModel>();
 		queueToCheck.add(root);
 		while (!queueToCheck.isEmpty()) {
-			AbstractModel modelToCheck = (AbstractModel) queueToCheck
+			AbstractModel modelToCheck = queueToCheck
 					.remove(0);
 			if (predicate.isAcceptable(modelToCheck)) {
 				listToAddTo.add(modelToCheck);
@@ -399,7 +398,7 @@ public class RootModel extends AbstractModel<AbstractModel, AbstractModel, IJava
 	public static List<AbstractModel> getModels(
 			AbstractModel root,
 			final Class type) {
-		return (List<AbstractModel>) getModels(root, new ModelFilter() {
+		return getModels(root, new ModelFilter() {
 			/**
 			 * @see edu.buffalo.cse.green.editor.model.RootModel.ModelFilter#isAcceptable(edu.buffalo.cse.green.editor.model.AbstractModel)
 			 */
@@ -532,7 +531,7 @@ public class RootModel extends AbstractModel<AbstractModel, AbstractModel, IJava
 				GreenException.illegalOperation(GRERR_NULL);
 			}
 			
-			return (AbstractModel) _elementMapToModel.get(
+			return _elementMapToModel.get(
 					element.getHandleIdentifier());
 		}
 
@@ -555,7 +554,7 @@ public class RootModel extends AbstractModel<AbstractModel, AbstractModel, IJava
 		 * @return The corresponding model.
 		 */
 		private AbstractModel removeElement(IJavaElement element) {
-			return (AbstractModel) _elementMapToModel.remove(
+			return  _elementMapToModel.remove(
 					element.getHandleIdentifier());
 		}
 	}

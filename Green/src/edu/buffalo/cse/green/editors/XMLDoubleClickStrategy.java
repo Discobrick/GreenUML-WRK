@@ -30,7 +30,6 @@ public class XMLDoubleClickStrategy implements ITextDoubleClickStrategy {
 				c = doc.getChar(pos);
 				if (c == '\\') {
 					pos -= 2;
-					continue;
 				}
 				if (c == Character.LINE_SEPARATOR || c == '\"')
 					break;

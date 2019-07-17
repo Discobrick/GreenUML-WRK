@@ -164,7 +164,7 @@ for(AbstractModel m : allModels) {
 					you.id = gd.vertices.size();
 					you.name = "" + you.id;
 					you.degree = y.getIncomingEdges().size() +
-								 y.getOutgoingEdges().size() /*(y.getSize().height + y.getSize().width)*/;
+								 (float)y.getOutgoingEdges().size();
 					you.isSource = you.degree > 0;
 					you.pos.x = y.getLocation().x/200.0f;
 					you.pos.y = y.getLocation().y/200.0f;
@@ -190,35 +190,15 @@ for(AbstractModel m : allModels) {
 			}
 		}
 		
-		//final GraphData fn = gd;
-		
-		//CCVisu.initializeLayout(gd, 2, null);
 		
 		Options options = CCVisuUtil.newOptions(gd, 100, 3, 1, false, false, 2.001f, null, false);
 		Minimizer me = new MinimizerBarnesHut(options);
-		/* new GraphEventListener() {
-		public void onGraphEvent(GraphEvent evt) {
-				for( int i=0; i<fn.vertices.size(); i++ )
-				{
-					System.out.println("putting vertex " + i + " to (" + fn.pos[i][0] + ", " + fn.pos[i][1] + ").");
-					fn.vertices.get(i).me.setLocation((int)(fn.pos[i][0]*1000), (int)(fn.pos[i][1]*1000));
-				}
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		}*/
 		
 		me.minimizeEnergy();
 		
-		//System.out.println("computed " + gd.vertices.size() + " vertices.");
-		
 		// normalize
-		float lx = 999, ly = 999;
+		float lx = 999;
+		float ly = 999;
 		for( ccvisu.GraphVertex v : gd.vertices )
 		{
 			if( v.pos.x < lx )

@@ -46,7 +46,7 @@ public class FieldPart extends MemberPart {
 		iFigure.setFont(PlugIn.getFontPreference(P_FONT, false));
 		
 		// map the model to its appropriate type EditPart
-		RootPart root = (RootPart) getRootPart();
+		RootPart root = getRootPart();
 		root.mapModelToEditPart(model(), this);
 		iFigure.setOpaque(true);
 

@@ -230,8 +230,7 @@ public class ImageWriterUtil {
 			ImageData myd=origImage.getImageData();
 			BufferedImage ga=convertToAWT(myd);
 			BufferedImage gn=convert8(ga);
-			ImageData output=convertToSWT(gn);	
-			return output;
+			return convertToSWT(gn);
 		}else{
 		ImageData destImageDataGrayscale = new ImageData(destImageData.width,
 				destImageData.height, 8, new PaletteData(GREEN_COLORS));

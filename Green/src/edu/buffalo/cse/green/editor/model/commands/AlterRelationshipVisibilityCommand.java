@@ -43,7 +43,7 @@ public class AlterRelationshipVisibilityCommand extends Command {
 	/**
 	 * @see org.eclipse.gef.commands.Command#execute()
 	 */
-	public void execute() throws IllegalArgumentException {
+	public void execute() {
 		RelationshipGroup rGroup = PlugIn.getRelationshipGroup(_partClass);
 
 		if (rGroup.isVisible()) {

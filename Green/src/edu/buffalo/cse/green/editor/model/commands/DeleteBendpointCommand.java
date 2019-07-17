@@ -46,7 +46,7 @@ public class DeleteBendpointCommand extends Command {
     	if (list == null) return;
 
     	// remove the desired bendpoint
-    	_bp = (Bendpoint) list.remove(_request.getIndex());
+    	_bp = list.remove(_request.getIndex());
     	
     	// set the constraint of the relationship
     	rFigure.getConnectionRouter().setConstraint(

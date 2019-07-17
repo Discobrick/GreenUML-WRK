@@ -40,8 +40,6 @@ import edu.buffalo.cse.green.editor.controller.TypePart;
 import edu.buffalo.cse.green.editor.model.AbstractModel;
 import edu.buffalo.cse.green.editor.model.MemberModel;
 import edu.buffalo.cse.green.editor.model.TypeModel;
-import edu.buffalo.cse.green.logging.UmlLog;
-import edu.buffalo.cse.green.relationships.RelationshipGroup;
 
 
 /**

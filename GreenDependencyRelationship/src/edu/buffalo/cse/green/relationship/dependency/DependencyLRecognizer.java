@@ -41,6 +41,7 @@ public class DependencyLRecognizer extends RelationshipRecognizer {
 	/**
 	 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.VariableDeclarationFragment)
 	 */
+	@Override
 	public boolean visit(VariableDeclarationFragment node) {
 		checkForDependency(node.getParent(), node.getName(), node
 				.getInitializer());
@@ -50,6 +51,7 @@ public class DependencyLRecognizer extends RelationshipRecognizer {
 	/**
 	 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.Assignment)
 	 */
+	@Override
 	public boolean visit(Assignment node) {
 		checkForDependency(node.getParent(), node.getLeftHandSide(), node
 				.getRightHandSide());
@@ -74,7 +76,7 @@ public class DependencyLRecognizer extends RelationshipRecognizer {
 				if (rhs == null) return;
 				
 				if (rhs.getNodeType() == CLASS_INSTANCE_CREATION) {
-					AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+					AbstractList<ASTNode> features = new ArrayList<>();
 					features.add(parent);
 					features.add(getMethodDeclaration());
 					
@@ -83,7 +85,7 @@ public class DependencyLRecognizer extends RelationshipRecognizer {
 							LHS.resolveTypeBinding(), DependencyLPart.class,
 							features);
 				} else if (rhs.getNodeType() == STRING_LITERAL) {
-					AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+					AbstractList<ASTNode> features = new ArrayList<>();
 					features.add(parent);
 					features.add(getMethodDeclaration());
 					

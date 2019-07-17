@@ -42,11 +42,10 @@ public class SVGFormat implements ISaveFormat {
 		figure.paint( g );
 		try {
 			g.getSVGGraphics2D().stream(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName))));
-		} catch ( SVGGraphics2DIOException e ) {
+		} catch ( SVGGraphics2DIOException|FileNotFoundException e ) {
 			e.printStackTrace();
-		} catch ( FileNotFoundException e ) {
-			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			g.dispose();
 		}
 	}

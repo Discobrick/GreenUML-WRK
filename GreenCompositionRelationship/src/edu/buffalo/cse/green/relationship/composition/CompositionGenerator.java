@@ -29,9 +29,9 @@ public class CompositionGenerator extends CardinalRelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#process(org.eclipse.jdt.core.dom.Block)
 	 */
-	protected boolean process(Block node) {
-		if (!correctTypeToGenerate()) return true;
-		if (!inConstructor()) { return true; }
+	protected void process(Block node) {
+		if (!correctTypeToGenerate()) return;
+		if (!inConstructor()) { return; }
 		generateFields();
 		
 		List<Statement> statements = (AbstractList<Statement>) node
@@ -47,7 +47,7 @@ public class CompositionGenerator extends CardinalRelationshipGenerator {
 
 			// create the appropriate number of method invocations
 			for (int x = 0; x > _cardinality; x--) {
-				List<Expression> arguments = new ArrayList<Expression>();
+				List<Expression> arguments = new ArrayList<>();
 				arguments.add(createInvocation(createTypeReference(
 						getActualTargetType())));
 
@@ -64,8 +64,6 @@ public class CompositionGenerator extends CardinalRelationshipGenerator {
 				statements.add(statements.size(), getAST().newExpressionStatement(ass));
 			}
 		}
-		
-		return true;
 	}
 
 	/* (non-Javadoc)

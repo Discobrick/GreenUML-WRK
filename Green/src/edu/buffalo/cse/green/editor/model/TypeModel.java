@@ -418,7 +418,7 @@ public class TypeModel extends MemberModel<CompartmentModel, RootModel, IType> {
 	 * @return The <code>IType</code> modeled by this class.
 	 */
 	public IType getType() {
-		return (IType) getMember();
+		return getMember();
 	}
 
 	/**
@@ -605,7 +605,7 @@ public class TypeModel extends MemberModel<CompartmentModel, RootModel, IType> {
 					.findView(JavaUI.ID_PACKAGES);
 
 			if (packExplorer != null) {
-				ISelection selection = (ISelection) packExplorer.getViewSite()
+				ISelection selection = packExplorer.getViewSite()
 						.getSelectionProvider().getSelection();
 
 				if (selection instanceof IStructuredSelection) { return (IStructuredSelection) selection; }

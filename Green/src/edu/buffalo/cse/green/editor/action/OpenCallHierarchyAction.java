@@ -25,7 +25,7 @@ public class OpenCallHierarchyAction extends ContextAction {
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#doRun()
 	 */
 	public void doRun() throws JavaModelException {
-		IMember elements[] = new IMember[1];
+		IMember[] elements = new IMember[1];
 		elements[0] = (IMember) _element;
 		CallHierarchyUI.openView(elements, getEditor().getSite().getWorkbenchWindow());
 	}
