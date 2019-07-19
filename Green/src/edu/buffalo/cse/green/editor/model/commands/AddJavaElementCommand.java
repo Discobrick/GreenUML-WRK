@@ -125,12 +125,12 @@ public class AddJavaElementCommand extends Command {
 			if(PlugIn.getBooleanPreference(P_AUTOARRANGE))
 			{
 				_editor.execute(new AutoArrangeCommand());
-				_editor.execute(new AutoArrangeCommand());
+				_editor.execute(new AutoArrangeCommand());			
 			}
 			else
 			{
-				_editor.refresh();
-				_editor.checkDirty();
+			//	_editor.refresh();
+			//	_editor.checkDirty();
 			}
 		} catch (JavaModelException e) {
 			e.printStackTrace();
