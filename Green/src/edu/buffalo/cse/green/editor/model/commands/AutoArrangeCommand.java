@@ -68,6 +68,7 @@ public class AutoArrangeCommand extends Command {
 	}
 	
 	
+	// Optimized layout for more complicated graphs
 	public void execute2() {
 	        DiagramEditor editor = DiagramEditor.getActiveEditor();
 	        RootModel root = editor.getRootModel();
@@ -167,16 +168,16 @@ public class AutoArrangeCommand extends Command {
 	        editor.checkDirty();
 	    }
 	
-	
+	// A more simple hierarchical model
 	public void execute() {
 	        DiagramEditor editor = DiagramEditor.getActiveEditor();
 	        RootModel root = editor.getRootModel();
 	        List<RelationshipModel> rels = root.getRelationships();	 
 	        List<AbstractModel> mods = root.getChildren();
 	        int maxLevel = getMaxLevel(mods);
+	        int[] posX = new int[maxLevel+1];
 	        
-	        
-	        
+	       	    	        
 	        System.out.println("MaxLevel: " + maxLevel);
 	        
 	        for (AbstractModel m : mods) {
@@ -184,7 +185,9 @@ public class AutoArrangeCommand extends Command {
 	            	int lvl = getLevel((TypeModel)m);
 	            	int level = maxLevel - lvl;
 	            	System.out.println(m.getClass().getSimpleName() + " level: " + level);
-	            	m.setLocation(400, level * (-150));
+	            	m.setSize(200, 100);
+	            	m.setLocation(posX[level], (level * (-150)));
+	            	posX[level] += 300;
 	            }
 	        }
 	 
@@ -193,6 +196,7 @@ public class AutoArrangeCommand extends Command {
 	
 	}
 	
+	// Finds the maximum depth out of a list of TypeModels
 	public int getMaxLevel(List<AbstractModel> list) {
 		int maxLevel = 0;
 		
@@ -208,6 +212,7 @@ public class AutoArrangeCommand extends Command {
 		return maxLevel;
 	}
 	
+	// Finds the depth for a single TypeModel
 	public int getLevel(TypeModel mod) {
 		
 		int maxLevel = 0;
