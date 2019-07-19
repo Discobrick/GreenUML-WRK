@@ -138,7 +138,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
 import org.eclipse.jdt.internal.ui.JavaPluginImages;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -197,7 +196,6 @@ import edu.buffalo.cse.green.editor.model.commands.CreateBendpointCommand;
 import edu.buffalo.cse.green.editor.save.ISaveFormat;
 import edu.buffalo.cse.green.editor.view.RelationshipFigure;
 import edu.buffalo.cse.green.editor.view.RootFigure;
-import edu.buffalo.cse.green.logging.UmlLog;
 import edu.buffalo.cse.green.relationships.RelationshipCache;
 import edu.buffalo.cse.green.relationships.RelationshipGroup;
 import edu.buffalo.cse.green.relationships.RelationshipRecognizer;
@@ -224,7 +222,7 @@ import edu.buffalo.cse.green.xml.XMLNode;
 public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 		CommandStackEventListener, ISelectionProvider {
 	static {
-		_editors = new ArrayList<DiagramEditor>();
+		_editors = new ArrayList<>();
 	}
 
 //	private boolean _ignoreMenuSelection = false;
@@ -303,13 +301,13 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	public DiagramEditor() {
 		updateConnectionRouter();
 		_editors.add(this);
-		_bendpoints = new ArrayList<BendpointInformation>();
+		_bendpoints = new ArrayList<>();
 		setEditDomain(new DefaultEditDomain(this));
 		getCommandStack().addCommandStackEventListener(this);
 		getCommandStack().setUndoLimit(100);
 		_root = new RootModel();
 		_cuMap = new CompilationUnitMap();
-		_filters = new ArrayList<Filter>();
+		_filters = new ArrayList<>();
 		ACTIVE_EDITOR = this; //Fixes null pointers
 
 		getPalettePreferences().setPaletteState(FlyoutPaletteComposite.STATE_PINNED_OPEN);	
@@ -532,7 +530,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 */
 	public static DiagramEditor findProjectEditor(IJavaProject project) {
 		for (int x = 0; x < _editors.size(); x++) {
-			DiagramEditor editor = (DiagramEditor) _editors.get(x);
+			DiagramEditor editor = _editors.get(x);
 			IJavaProject editorProject = editor.getProject();
 			if (editorProject == null) continue;
 			
@@ -872,8 +870,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditorWithPalette#getPaletteRoot()
 	 */
 	protected PaletteRoot getPaletteRoot() {
-		PaletteRoot pRoot = DiagramPaletteFactory.createPaletteRoot( );
-		return pRoot;
+		return DiagramPaletteFactory.createPaletteRoot();
 	}
 
 	/**
@@ -914,7 +911,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 * @return a reference to the opened editor, if successful.
 	 */
 	private static DiagramEditor createEditor(
-			IJavaElement element) throws JavaModelException {
+			IJavaElement element){ 
 		IWorkbenchWindow dwindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		IWorkbenchPage workbenchPage = dwindow.getActivePage();
@@ -957,12 +954,9 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 					workbenchPage, diaFile, true);
 			ACTIVE_EDITOR = editor;
 			return editor;
-		} catch (CoreException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (CoreException | IOException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -1233,8 +1227,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 		}
 		
 		// write the contents into the file (perform the save)
-		try {
-			FileWriter fWriter = new FileWriter(file);
+		try(FileWriter fWriter = new FileWriter(file)){			
 			PrintWriter pWriter = new PrintWriter(fWriter);
 			pWriter.println(contents);
 			pWriter.close();
@@ -1565,8 +1558,6 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 
 	@Override
 	public void stackChanged(CommandStackEvent event) {
-		// TODO Auto-generated method stub
-		//super.stackChanged(event);
 		checkDirty();
 	}
 }
@@ -1919,13 +1910,10 @@ class DiagramEditorFilePolicies {
 			
 			fReader.read(fileContents);
 			fReader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
-		}
+		} 
 		
 		if (fileContents.length < 5) {
 			// file is "empty" - no error
@@ -1941,7 +1929,7 @@ class DiagramEditorFilePolicies {
 		}
 		
 		if (node.getChildren().size() == 0) { return; }
-		parent = (XMLNode) node.getChild(XML_UML);
+		parent = node.getChild(XML_UML);
 		
 		PlugIn.runWithoutRecognizers(new Runnable() {
 			/**
@@ -2071,10 +2059,7 @@ class DiagramEditorFilePolicies {
 				
 					filePath = PlugIn.getWorkspaceRoot().getFile(
 							editor.getCurrentFile().getFullPath()).getLocation();
-				} catch (CoreException e) {
-					e.printStackTrace();
-					return;
-				} catch (IOException e) {
+				} catch (CoreException | IOException e) {
 					e.printStackTrace();
 					return;
 				}

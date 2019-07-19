@@ -134,7 +134,7 @@ public class RootPart extends AbstractPart {
 	 * @see edu.buffalo.cse.green.editor.controller.AbstractPart#getPartFromModel(edu.buffalo.cse.green.editor.model.AbstractModel)
 	 */
 	public AbstractPart getPartFromModel(AbstractModel model) {
-		return (AbstractPart) _modelToEditPartMap.get(model);
+		return _modelToEditPartMap.get(model);
 	}
 
 	/**
@@ -237,9 +237,7 @@ public class RootPart extends AbstractPart {
 			}
 
 			// Handle dragged rectangle selections
-			boolean result = super.handleButtonUp(button);
-
-			return result;
+			return super.handleButtonUp(button);
 		}
 	}
 	

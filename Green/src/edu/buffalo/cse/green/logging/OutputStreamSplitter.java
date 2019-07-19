@@ -1,6 +1,5 @@
 package edu.buffalo.cse.green.logging;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 

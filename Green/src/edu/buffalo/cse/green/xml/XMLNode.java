@@ -90,7 +90,7 @@ public class XMLNode {
 	 * @return The requested attribute of the node.
 	 */
 	public String getAttribute(String key) {
-		return (String) _attributes.get(key);
+		return _attributes.get(key);
 	}
 
 	/**

@@ -125,11 +125,9 @@ public abstract class RelationshipRemover extends RelationshipVisitor {
 			organizeImports(getSourceType());
 			DiagramEditor.getActiveEditor().refresh();
 			_rModel.getSourceModel().forceRefesh();
-		} catch (BadLocationException e) {
+		} catch (BadLocationException | JavaModelException e) {
 			e.printStackTrace();
-		} catch (JavaModelException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**

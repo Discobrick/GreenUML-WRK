@@ -9,7 +9,6 @@
  */
 package edu.buffalo.cse.green.relationship.realization;
 
-import java.util.AbstractList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -29,7 +28,7 @@ public class RealizationGenerator extends RelationshipGenerator {
 	 */
 	public boolean process(DeclarationInfoProvider node) {
 		if (!correctTypeToGenerate()) return true;
-		List<Type> superInterfaces = (AbstractList<Type>) node.getSuperInterfaceTypes();
+		List<Type> superInterfaces = node.getSuperInterfaceTypes();
 		
 		// If it's already in there, don't add it again
 		for (Type type : superInterfaces) {
@@ -43,8 +42,8 @@ public class RealizationGenerator extends RelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#process(org.eclipse.jdt.core.dom.Block)
 	 */
-	protected boolean process(Block node) {
-		return false;
+	protected void process(Block node) {
+		//Probably not implemented due to lack of need
 	}
 
 	/**

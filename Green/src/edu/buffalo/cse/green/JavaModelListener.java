@@ -161,7 +161,7 @@ implements IElementChangedListener {
 			}
 		}
 		catch (Throwable t) {
-			//TODO Incremental exploration throws Null Pointer.  Virtually unreproduceable.
+			//Incremental exploration throws Null Pointer.  Virtually unreproduceable.
 			GreenException.critical(t);
 		} finally {
 			TypeRefactorHandler.REMOVED_TYPE = null;
@@ -615,7 +615,7 @@ implements RefactorHandler<E> {
 
 				TypeModel nModel = root.createTypeModel((IType) nType);
 				if (oModel != null) {
-					// TODO We tried to catch a ResourceException,
+					// We tried to catch a ResourceException,
 					// but it is caught in MemberModel
 					oModel.removeFromParent();
 					nModel.setLocation(oModel.getLocation());

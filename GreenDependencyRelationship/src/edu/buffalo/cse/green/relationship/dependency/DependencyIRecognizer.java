@@ -40,18 +40,20 @@ public class DependencyIRecognizer extends RelationshipRecognizer {
 	/**
 	 * Stop the visitor from going inside any initializer block
 	 */
+	@Override
 	public boolean visit(Initializer node) {
 		return false;
 	}
 	
 	/**
+	 * @return 
 	 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.ClassInstanceCreation)
 	 */
 	public boolean visit(ClassInstanceCreation node) {
-		AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+		AbstractList<ASTNode> features = new ArrayList<>();
 		
-		if (!(node.getParent().getNodeType() == ASSIGNMENT) &&
-				!(node.getParent().getNodeType() ==
+		if ((node.getParent().getNodeType() != ASSIGNMENT) &&
+				(node.getParent().getNodeType() !=
 					VARIABLE_DECLARATION_FRAGMENT)) {
 			features.add(node);
 			
@@ -61,7 +63,6 @@ public class DependencyIRecognizer extends RelationshipRecognizer {
 			fireFoundRelationship(getCurrentType(), typeBinding,
 					DependencyIPart.class, features);
 		}
-		
 		return true;
 	}
 

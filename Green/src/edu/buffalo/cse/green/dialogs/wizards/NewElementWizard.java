@@ -291,7 +291,7 @@ public abstract class NewElementWizard extends GreenWizard implements INewWizard
 		/**
 		 * Error codes and texts for use with the page IStatus list
 		 */
-		//TODO Turn these into enums?
+		//Turn these into enums?
 		protected final int ERROR_IDENTIFIER      = 0; //Invalid identifier syntax
 		protected final int ERROR_TYPE            = 1; //No [return] type specified
 		protected final int ERROR_PARAM_TYPE_NAME = 2; //Invalid type name syntax

@@ -32,13 +32,12 @@ public class XMLConverter {
 	 * @author bcmartin
 	 * @author zgwang
 	 */
-	public XMLNode getDecodedXML(String xml)
-			throws ArrayIndexOutOfBoundsException {
+	public XMLNode getDecodedXML(String xml) {
 		int pos;
 		String line;
 		XMLNode node = new XMLNode("!root");
 		XMLNode currentNode = node;
-
+		
 		while (true) {
 			pos = xml.indexOf('>');
 			if (pos == -1) break;
@@ -121,7 +120,7 @@ public class XMLConverter {
 	 */
 	public void writeMap(Map<String, String> map) {
 		for (String key : map.keySet()) {
-			writeKey(key, map.get(key).toString());
+			writeKey(key, map.get(key));
 		}
 	}
 

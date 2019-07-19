@@ -34,8 +34,7 @@ public class RootFigure extends FreeformLayer {
 	 * @see org.eclipse.draw2d.Figure#getPreferredSize(int, int)
 	 */
 	public Dimension getPreferredSize(int wHint, int hHint) {
-		Dimension d = super.getPreferredSize(wHint, hHint);
-		return d;
+		return super.getPreferredSize(wHint, hHint);
 	}
 	
 	public void paint(Graphics g) {

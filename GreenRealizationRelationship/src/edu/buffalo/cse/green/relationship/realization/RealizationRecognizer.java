@@ -31,9 +31,8 @@ public class RealizationRecognizer extends RelationshipRecognizer {
 	 * @see edu.buffalo.cse.green.relationships.RelationshipVisitor#process(org.eclipse.jdt.core.dom.TypeDeclaration)
 	 */
 	public boolean process(DeclarationInfoProvider node) {
-		if (!node.isInterface()) { // it's a class
-			if (getCurrentType() != null) {
-				List<Type> interfaces = (AbstractList<Type>) node
+		if (!node.isInterface() && getCurrentType() != null) { // it's a class
+				List<Type> interfaces = node
 						.getSuperInterfaceTypes();
 
 				for (Type type : interfaces) {
@@ -42,7 +41,7 @@ public class RealizationRecognizer extends RelationshipRecognizer {
 
 					if (targetType != null) {
 						AbstractList<ASTNode> features =
-							new ArrayList<ASTNode>();
+							new ArrayList<>();
 						features.add(type);
 
 						fireFoundRelationship(getCurrentType(),
@@ -51,7 +50,6 @@ public class RealizationRecognizer extends RelationshipRecognizer {
 					}
 				}
 			}
-		}
 
 		return true;
 	}
