@@ -147,7 +147,7 @@
    </extension>
    
       <extension point="edu.buffalo.cse.green.contextAction">
-      <action class="edu.buffalo.cse.green.editor.action.ArrangeHierarchical"/>
+      <action class="edu.buffalo.cse.green.editor.action.ArrangeTree"/>
    </extension>
 
    <extension point="edu.buffalo.cse.green.contextAction">

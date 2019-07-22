@@ -18,17 +18,17 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jdt.core.JavaModelException;
 
 import edu.buffalo.cse.green.editor.DiagramEditor;
-import edu.buffalo.cse.green.editor.model.commands.ArrangeHierarchicalCommand;
+import edu.buffalo.cse.green.editor.model.commands.ArrangeTreeCommand;
 
 
 /**
  * @author zgwang
  *
  */
-public class ArrangeHierarchical extends ContextAction {
+public class ArrangeTree extends ContextAction {
 	
 	
-	public ArrangeHierarchical() {
+	public ArrangeTree() {
 		setAccelerator('l');
 	}
 
@@ -39,7 +39,7 @@ public class ArrangeHierarchical extends ContextAction {
 	protected void doRun() throws JavaModelException {
 		DiagramEditor editor = DiagramEditor.getActiveEditor();
 		
-		editor.execute(new ArrangeHierarchicalCommand());
+		editor.execute(new ArrangeTreeCommand());
 	}
 
 	/**

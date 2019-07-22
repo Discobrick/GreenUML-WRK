@@ -46,7 +46,7 @@ import sun.reflect.Reflection;
  * @author zgwang
  *
  */
-public class ArrangeHierarchicalCommand extends Command {
+public class ArrangeTreeCommand extends Command {
 
 	private int[][] opos;
 	private int[][] npos;
@@ -55,7 +55,7 @@ public class ArrangeHierarchicalCommand extends Command {
 	/**
 	 * 
 	 */
-	public ArrangeHierarchicalCommand() {
+	public ArrangeTreeCommand() {
 		_m = new Vector<TypeModel>();
 	}
 
@@ -69,7 +69,7 @@ public class ArrangeHierarchicalCommand extends Command {
 			_m.get(i).setLocation(npos[i][0], npos[i][1]);
 	}
 
-	// A more simple hierarchical model
+	// A more simple Tree model
 	public void execute() {
 		DiagramEditor editor = DiagramEditor.getActiveEditor();
 		RootModel root = editor.getRootModel();
