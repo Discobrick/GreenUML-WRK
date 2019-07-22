@@ -89,6 +89,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ConnectionRouter;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -183,6 +184,7 @@ import edu.buffalo.cse.green.PlugIn;
 import edu.buffalo.cse.green.constants.PluginConstants;
 import edu.buffalo.cse.green.editor.action.ContextAction;
 import edu.buffalo.cse.green.editor.action.Submenu;
+import edu.buffalo.cse.green.editor.action.ZoomFitAction;
 import edu.buffalo.cse.green.editor.controller.AbstractPart;
 import edu.buffalo.cse.green.editor.controller.RelationshipPart;
 import edu.buffalo.cse.green.editor.controller.RootPart;
@@ -803,29 +805,33 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
 		ScrollingGraphicalViewer viewer = (ScrollingGraphicalViewer)getGraphicalViewer();
-
+		
+		
 		// Scroll-wheel Zoom
 		getGraphicalViewer().setProperty(MouseWheelHandler.KeyGenerator.getKey(SWT.MOD1), 
-				MouseWheelZoomHandler.SINGLETON);		
+				MouseWheelZoomHandler.SINGLETON);
 		
 		// associate appropriate handlers with the viewer
 		_gefRootPart = new ScalableFreeformRootEditPart();
 		ZoomManager zoom = _gefRootPart.getZoomManager();
 
-// Manual description of how much to zoom in and zoom out
+		// Default zoom levels when plug-in is loaded
 		double []zL = new double[50];
 		double sum = 0;
 		for(int i = 0; i < zL.length; i++) {
-			sum += 0.1;
+			sum += 0.05;
 			zL[i]=sum;
 		}
+		
 		zoom.setZoomLevels(zL);
 
-		//List<String> zoomLevels = new ArrayList<String>(3);
-		//zoomLevels.add(ZoomManager.FIT_ALL);
-		//zoomLevels.add(ZoomManager.FIT_WIDTH);
-		//zoomLevels.add(ZoomManager.FIT_HEIGHT);
-		//zoom.setZoomLevelContributions(zoomLevels);
+		/* Code that was written before adaptive zoom
+			//List<String> zoomLevels = new ArrayList<String>(3);
+			//zoomLevels.add(ZoomManager.FIT_ALL);
+			//zoomLevels.add(ZoomManager.FIT_WIDTH);
+			//zoomLevels.add(ZoomManager.FIT_HEIGHT);
+			//zoom.setZoomLevelContributions(zoomLevels); 
+		*/
 		IAction zoomIn = new ZoomInAction(_gefRootPart.getZoomManager());
 		IAction zoomOut = new ZoomOutAction(_gefRootPart.getZoomManager());
 		getActionRegistry().registerAction(zoomIn);
@@ -864,6 +870,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 */
 	public void addKeyAction(char key, ContextAction action) {
 		_sharedKeyHandler.put(KeyStroke.getPressed(key, key, 0), action);
+		System.out.println(action.getAccelerator());
 	}
 
 	/**
@@ -1069,9 +1076,74 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	}
 
 	/**
-	 * Checks to see if there were any changes to the editor
+	 * Checks to see if there were any changes to the editor and adjusts the zoom
+	 * according to layouts changes (moved class boxes)
 	 */
 	public void checkDirty() {
+		DiagramEditor activeEditor = DiagramEditor.getActiveEditor();
+		ZoomManager zoom = _gefRootPart.getZoomManager();
+		List<RelationshipModel> allRels = activeEditor.getRootModel().getRelationships();
+		List<AbstractModel> allModels = activeEditor.getRootModel().getChildren();
+		Rectangle viewSize = activeEditor.getSize();
+		
+		int hMin = 9999;
+		int hMax = 0;
+		int vMin = 9999;
+		int vMax = 0;
+		
+		for(AbstractModel m : allModels) {
+			IFigure f = activeEditor.getRootPart().getPartFromModel(m).getFigure();
+
+			if(allRels.contains(m)) {
+				//Necessary because this method of obtaining the figure's dimension
+				//is inaccurate for relationships.
+				continue;
+			}
+
+			Dimension dim = m.getSize();
+			if(dim.height == -1 && dim.width == -1) {
+				//Box is default size, need to get real size instead.
+				dim = f.getLayoutManager().getPreferredSize(f.getParent(), -1, -1);
+			}
+			
+			int mLeft = m.getLocation().x;
+			int mRight = mLeft + dim.width;
+			int mTop = m.getLocation().y;
+			int mBottom = mTop + dim.height;
+			
+			if(mLeft < hMin) hMin = mLeft;
+			if(mRight > hMax) hMax = mRight;
+			if(mTop < vMin) vMin = mTop;
+			if(mBottom > vMax) vMax = mBottom;
+		}
+		
+		//viewSize.width/height is the editor window size + scroll bars (17 pixels wide)
+		// gets zoom level that fits all layout in the viewer taking in account only width
+		double widthScale = ((double)(viewSize.width - 17) / (hMax - hMin));
+		// gets zoom level that fits all layout in the viewer taking in account only height
+		double heightScale = ((double)(viewSize.height - 17) / (vMax - vMin));
+		
+		
+		// The bigger the zoom level, the closer it will zoom.
+		
+		// Array to hold total of 50 zoom level values
+		double []zoomLevel = new double[50];
+		
+		// Determines which of the two is bigger, height or width. If the width is bigger
+		// then max zoom-out is set to be maximum regarding width and vise versa
+		// smaller zoom means u are zoomed out more, that is why smallest of two is taken.
+		double sum = Math.min(widthScale, heightScale);
+		
+		// Zoom levels start from maximum possible zoom that is determined by width or 
+		// height of the layout
+		for(int i = 0; i < zoomLevel.length; i++) {
+			zoomLevel[i]=sum;
+			sum += 0.05;
+		}	
+		
+		// sets newly acquired zoom levels according to layout changes
+		zoom.setZoomLevels(zoomLevel);
+		
 		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 

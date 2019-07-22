@@ -181,15 +181,11 @@ public class AutoArrangeCommand extends Command {
 	        int maxLevel = getMaxLevel(mods);
 	        int[] posX = new int[maxLevel+1];
 	        
-	       	    	        
-	        System.out.println("MaxLevel: " + maxLevel);
-	        
 	        for (AbstractModel m : mods) {
 	            if (m instanceof TypeModel) {
 	            	int lvl = getLevel((TypeModel)m);
 	            	int level = maxLevel - lvl;
-	            	System.out.println(m.getClass().getSimpleName() + " level: " + level
-	            			+ "Incoming: " + ((TypeModel) m).getIncomingEdges().size());
+
 	            	m.setSize(200, 100);
 	            	m.setLocation(posX[level], (level * (-150)));
 	            	posX[level] += 300;
@@ -205,14 +201,11 @@ public class AutoArrangeCommand extends Command {
 		DiagramEditor editor = DiagramEditor.getActiveEditor();
         RootModel root = editor.getRootModel();
 		List<AbstractModel> children = root.getChildren();
-		System.out.println("Children: " + children);
+
 		int maxLevel = getMaxLevel(children);
 		List<TypeModel> tops = new ArrayList<>();
 		int nextX = 0;
 		List<String> classes = new ArrayList<>();
-		
-		
-		System.out.println("Execute");
 		
 		for(AbstractModel mod : children) {
 			if(mod instanceof TypeModel) {
@@ -225,11 +218,10 @@ public class AutoArrangeCommand extends Command {
 			}
 		}
 		
-		System.out.println(tops);
 		
 		for(AbstractModel t : tops) {
 			if(t instanceof TypeModel) {
-				System.out.println("New tree");
+
 				nextX = drawTree8((TypeModel) t, maxLevel, nextX);
 			}
 		}
@@ -242,19 +234,17 @@ public class AutoArrangeCommand extends Command {
 	public int drawTree8(TypeModel top, int max, int prevX) {
         DiagramEditor editor = DiagramEditor.getActiveEditor();
         List<AbstractModel> allModels = getAllModels(top);
-        System.out.println("AllModels: " + allModels);
         int[] xPos = new int[max + 1];
         Arrays.fill(xPos, (prevX + 100));
         int nextX = 0;
            	    	        
-        System.out.println("MaxLevel: " + max);
+
         
         for (AbstractModel m : allModels) {
             if (m instanceof TypeModel) {
             	int lvl = getLevel((TypeModel)m);
             	int level = max - lvl;
-            	System.out.println(m.getClass().getSimpleName() + " level: " + level
-            			+ "Incoming: " + ((TypeModel) m).getIncomingEdges().size());
+
             	m.setSize(200, 100);
             	m.setLocation(xPos[level], (level * (-150)));
             	xPos[level] += 300;
@@ -275,7 +265,7 @@ public class AutoArrangeCommand extends Command {
 	public List<AbstractModel> getAllModels(TypeModel top) {
 		List<AbstractModel> c = new ArrayList<>();
 		Set<RelationshipModel> set = top.getIncomingEdges();
-		System.out.println("Outgoing: " + set);
+
 		int repeat = set.size();
 		
 		if(repeat != 0) {
