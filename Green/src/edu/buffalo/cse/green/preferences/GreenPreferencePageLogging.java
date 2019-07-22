@@ -2,13 +2,10 @@ package edu.buffalo.cse.green.preferences;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import edu.buffalo.cse.green.PlugIn;
-import edu.buffalo.cse.green.editor.DiagramEditor;
 import edu.buffalo.cse.green.logging.UmlLog;
 
 import static edu.buffalo.cse.green.preferences.PreferenceInitializer.P_LOG_TO_STD;

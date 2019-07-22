@@ -94,7 +94,7 @@ public class SampleNewWizardPage extends WizardPage {
 	 */
 
 	private void initialize() {
-		if (selection != null && selection.isEmpty() == false
+		if (selection != null && !selection.isEmpty()
 				&& selection instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
 			if (ssel.size() > 1)
@@ -162,7 +162,7 @@ public class SampleNewWizardPage extends WizardPage {
 		int dotLoc = fileName.lastIndexOf('.');
 		if (dotLoc != -1) {
 			String ext = fileName.substring(dotLoc + 1);
-			if (ext.equalsIgnoreCase("mpe") == false) {
+			if (!ext.equalsIgnoreCase("mpe")) {
 				updateStatus("File extension must be \"mpe\"");
 				return;
 			}

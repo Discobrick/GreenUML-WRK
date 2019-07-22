@@ -40,6 +40,7 @@ public class DependencyLGenerator extends CardinalRelationshipGenerator {
 	 * @see edu.buffalo.cse.green.relationships.RelationshipVisitor#preVisit()
 	 * @author zgwang
 	 */
+	@Override
 	protected void preVisit() {
 		_selectedMethods = null; //Ensures that previously used methods do not carry over
 		try {
@@ -64,12 +65,12 @@ public class DependencyLGenerator extends CardinalRelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#process(org.eclipse.jdt.core.dom.Block)
 	 */
-	protected boolean process(Block block) {
-		if (_selectedMethods == null) return true;
-		if (!correctTypeToGenerate()) return true;
+	protected void process(Block block) {
+		if (_selectedMethods == null) return;
+		if (!correctTypeToGenerate()) return;
 		IMethod method =
 			(IMethod) getMethodDeclaration().resolveBinding().getJavaElement();
-		if (!_selectedMethods.contains(method)) return true;
+		if (!_selectedMethods.contains(method)) return;
 
 		List<Statement> statements =
 			(AbstractList<Statement>) (List) block.statements();
@@ -88,7 +89,6 @@ public class DependencyLGenerator extends CardinalRelationshipGenerator {
 			getLocalDeclarations().add(localName);
 		}
 		
-		return true;
 	}
 
 	/* (non-Javadoc)

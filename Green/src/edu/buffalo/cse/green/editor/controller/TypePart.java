@@ -71,6 +71,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 	/**
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#refreshVisuals()
 	 */
+	@Override
 	protected void refreshVisuals() {
 		super.refreshVisuals(getNameLabel());
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
@@ -136,7 +137,8 @@ public class TypePart extends MemberPart implements NodeEditPart {
 	public DeleteCommand getDeleteCommand() {
 		return new DeleteTypeCommand(model());
 	}
-
+	
+	@Override
 	protected void addPropertyListeners() {
 		super.addPropertyListeners();
 		
@@ -154,6 +156,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 	/**
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#createEditPolicies()
 	 */
+	@Override
 	protected void createEditPolicies() {
 		super.createEditPolicies();
 		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
@@ -263,6 +266,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 	/**
 	 * @see edu.buffalo.cse.green.editor.controller.AbstractPart#setInitialBackgroundColor()
 	 */
+	@Override
 	public void setInitialBackgroundColor() {
 		getNameLabel().getParent().setBackgroundColor(
 				PlugIn.getColorPreference(P_COLOR_UML));
@@ -272,6 +276,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 	/**
 	 * @see edu.buffalo.cse.green.editor.controller.AbstractPart#setSelectedBackgroundColor()
 	 */
+	@Override
 	public void setSelectedBackgroundColor() {
 		getNameLabel().getParent().setBackgroundColor(
 				PlugIn.getColorPreference(P_COLOR_SELECTED));
@@ -288,6 +293,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 			/**
 			 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.EnumDeclaration)
 			 */
+			@Override
 			public boolean visit(EnumDeclaration node) {
 				return visitNode(node);
 			}
@@ -295,6 +301,7 @@ public class TypePart extends MemberPart implements NodeEditPart {
 			/**
 			 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.TypeDeclaration)
 			 */
+			@Override
 			public boolean visit(TypeDeclaration node) {
 				return visitNode(node);
 			}

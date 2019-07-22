@@ -11,7 +11,7 @@
 //Created 9/1/2004
 package edu.buffalo.cse.green.relationship.generalization;
 
-import java.util.AbstractList;
+
 import java.util.List;
 
 import org.eclipse.jdt.core.JavaModelException;
@@ -43,8 +43,7 @@ public class GeneralizationGenerator extends RelationshipGenerator {
 				Type type = createTypeReference(getTargetType());
 				
 				// retrieve the live list of types
-				List<Type> interfaceList =
-					(AbstractList<Type>) node.getSuperInterfaceTypes();
+				List<Type> interfaceList = node.getSuperInterfaceTypes();
 				
 				// ensure that the type is not already generalized
 				for (Type eType : interfaceList) {
@@ -75,8 +74,7 @@ public class GeneralizationGenerator extends RelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#process(org.eclipse.jdt.core.dom.Block)
 	 */
-	protected boolean process(Block node) {
-		return false;
+	protected void process(Block node) {
 	}
 
 	/**

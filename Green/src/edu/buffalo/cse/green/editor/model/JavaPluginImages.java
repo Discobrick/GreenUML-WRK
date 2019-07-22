@@ -480,7 +480,7 @@ public class JavaPluginImages {
 			fDescriptor = descriptor;
 		}
 
-		@Override
+		@Override @Deprecated
 		public ImageData getImageData() {
 			if (fData == null) {
 				fData= fDescriptor.getImageData();

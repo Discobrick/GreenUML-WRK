@@ -15,7 +15,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import edu.buffalo.cse.green.PlugIn;
 
-/**
+/** 
  * Class used to initialize default preference values.
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
@@ -53,7 +53,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public static final String P_LOG_TO_STD = "log.to.std";
 	public static final String P_LOG_TO_FILE = "log.to.file";
 	public static final String P_LOG_FILE_NAME = "log.file.name";
-	
 	/**
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
@@ -91,8 +90,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(P_LOG_TO_STD, true);
 		store.setDefault(P_LOG_TO_FILE, false);
 		store.setDefault(P_LOG_FILE_NAME, "");
-		
-		
 		//FIXME Font errors
 		//The following two errors occur when Green is being initialized without generating
 		//an editor. (e.g. through a RefactorParticipant invocation)

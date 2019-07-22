@@ -40,8 +40,6 @@ import edu.buffalo.cse.green.editor.controller.TypePart;
 import edu.buffalo.cse.green.editor.model.AbstractModel;
 import edu.buffalo.cse.green.editor.model.MemberModel;
 import edu.buffalo.cse.green.editor.model.TypeModel;
-import edu.buffalo.cse.green.logging.UmlLog;
-import edu.buffalo.cse.green.relationships.RelationshipGroup;
 
 
 /**
@@ -299,6 +297,7 @@ class OutlineLabelProvider extends LabelProvider {
      * 
      * @return the image to view at the given element
 	 */
+	@Override
 	public Image getImage(Object element) {
 		// if an image was already created, free it up (so as to not waste mem)
 		MemberPart part = (MemberPart) element;
@@ -321,6 +320,7 @@ class OutlineLabelProvider extends LabelProvider {
      * 
 	 * @return the text to view at the given element
 	 */
+	@Override
 	public String getText(Object element) {
 		MemberPart part = (MemberPart) element;
 		MemberModel model = (MemberModel) part.getModel();

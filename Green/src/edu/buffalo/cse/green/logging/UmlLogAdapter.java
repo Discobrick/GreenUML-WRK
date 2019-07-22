@@ -24,7 +24,7 @@ public class UmlLogAdapter extends ByteArrayOutputStream {
 
 
 	@Override
-	public void flush() throws IOException, SecurityException {
+	public void flush() throws IOException {
 		super.flush();  // Throws.
 
 		String s = this.toString();

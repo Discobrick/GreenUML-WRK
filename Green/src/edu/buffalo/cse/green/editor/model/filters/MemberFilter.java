@@ -24,7 +24,7 @@ import org.eclipse.jdt.core.IType;
 
 import edu.buffalo.cse.green.GreenException;
 
-//TODO _enabled is coded with >2, <2, %2 operations.
+// _enabled is coded with >2, <2, %2 operations.
 //This should be changed.  Also see: ManageFiltersDialog
 
 public class MemberFilter {
