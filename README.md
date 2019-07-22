@@ -27,7 +27,7 @@ Green supports exporting files to JPG, PNG and GIF formats, as well as saving th
 - Added logger and an option to write output to file (accesible in Preferences)
 
 ## Requirements
-Eclipse 4.6 Neon
+Eclipse 4.7 Oxygen
 
 ## Installation
 
@@ -38,6 +38,14 @@ Eclipse 4.6 Neon
      Location: http://odo.lv/ftp/tools/GreenUpdateSite
 - Click OK 
 - Choose what features to install and follow further instructions
+
+### Creating update site 
+
+ Download the GreenUpdateSite folder `https://github.com/Discobrick/GreenUML-WRK/tree/master/GreenUpdateSite` 
+ to your computer or server.
+ And then use a link to the folder as an Update Site
+ 
+
 
 ## Users guide and additional information
 - [Using the Green UML Plugin for Eclipse](https://www.clear.rice.edu/comp310/Eclipse/GreenUML/)
