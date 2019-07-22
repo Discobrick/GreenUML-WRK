@@ -320,6 +320,7 @@ class OutlineLabelProvider extends LabelProvider {
      * 
 	 * @return the text to view at the given element
 	 */
+	@Override
 	public String getText(Object element) {
 		MemberPart part = (MemberPart) element;
 		MemberModel model = (MemberModel) part.getModel();

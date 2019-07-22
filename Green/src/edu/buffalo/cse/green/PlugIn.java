@@ -222,6 +222,7 @@ public final class PlugIn extends AbstractUIPlugin {
 	/**
 	 * This method is called upon plug-in activation
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		
@@ -393,6 +394,7 @@ public final class PlugIn extends AbstractUIPlugin {
 	/**
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 	}
@@ -538,12 +540,6 @@ public final class PlugIn extends AbstractUIPlugin {
 	 * @author zgwang
 	 */
 	public static int getVersion() {
-		//TODO Versioning, this should get cleaned up a bit.
-		//Modified to adhere to Eclipse's versioning system as of 10/10/06
-		//Reminder: in eclipse, version numbers are composed of 
-		//four (4) segments: 3 integers and a string respectively 
-		//named major.minor.service.qualifier.
-		//the qualifier is usually in the form vYYMMDD
 		String version = getDefault().getBundle().getHeaders().get(
 				Constants.BUNDLE_VERSION);
 		int firstDot = version.indexOf('.');

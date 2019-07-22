@@ -626,6 +626,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditor#initializeGraphicalViewer()
 	 */
+	@Override
 	protected void initializeGraphicalViewer() {
 		// associate Green's model and controller with the editor
 		getGraphicalViewer().setContents(getRootModel());
@@ -766,6 +767,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
 	 */
+	@Override
 	public boolean isSaveAsAllowed() {
 		return true;
 	}
@@ -800,6 +802,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditor#configureGraphicalViewer()
 	 */
+	@Override
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
 		ScrollingGraphicalViewer viewer = (ScrollingGraphicalViewer)getGraphicalViewer();
@@ -866,6 +869,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.IWorkbenchPart#setFocus()
 	 */
+	@Override
 	public void setFocus() {
 		ACTIVE_EDITOR = this;
 
@@ -1014,6 +1018,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
+	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		if (selection.isEmpty()) { return; }
 		super.selectionChanged(part, selection);
@@ -1053,6 +1058,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.commands.CommandStackListener#commandStackChanged(java.util.EventObject)
 	 */
+	@Override
 	public void commandStackChanged(EventObject event) {
 		super.commandStackChanged(event);
 		checkDirty();
@@ -1068,6 +1074,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isSaveOnCloseNeeded()
 	 */
+	@Override
 	public boolean isSaveOnCloseNeeded() {
 		return isDirty();
 	}
@@ -1075,6 +1082,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isDirty()
 	 */
+	@Override
 	public boolean isDirty() {
 		return getCommandStack().isDirty();
 	}
@@ -1162,6 +1170,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.part.WorkbenchPart#setPartName(java.lang.String)
 	 */
+	@Override
 	public void setPartName(String partName) {
 		super.setPartName(partName);
 	}
