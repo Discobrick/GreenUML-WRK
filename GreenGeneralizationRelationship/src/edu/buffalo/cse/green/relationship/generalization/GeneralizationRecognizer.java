@@ -33,11 +33,10 @@ public class GeneralizationRecognizer extends RelationshipRecognizer {
 	public boolean process(DeclarationInfoProvider node) {
 		if (getCurrentType() != null) {
 			if (node.isInterface()) {
-				List<Type> interfaces =
-					(AbstractList<Type>) node.getSuperInterfaceTypes();
+				List<Type> interfaces = node.getSuperInterfaceTypes();
 
 				for (Type intType : interfaces) {
-					AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+					AbstractList<ASTNode> features = new ArrayList<>();
 
 					fireFoundRelationship(getCurrentType(),
 							intType.resolveBinding(), GeneralizationPart.class,
@@ -47,7 +46,7 @@ public class GeneralizationRecognizer extends RelationshipRecognizer {
 				Type classType = node.getSuperclassType();
 
 				if (classType != null) {
-					AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+					AbstractList<ASTNode> features = new ArrayList<>();
 					ITypeBinding binding = classType.resolveBinding();
 					if (binding == null) return true;
 					
@@ -56,7 +55,6 @@ public class GeneralizationRecognizer extends RelationshipRecognizer {
 				}
 			}
 		}
-
 		return true;
 	}
 

@@ -44,21 +44,6 @@ public class OpenNewEditorAction implements IActionDelegate {
 			e.printStackTrace();
 		}
 		
-		/*
-	 	IJavaElement element = (IJavaElement) ((StructuredSelection) _selection)
-			.getFirstElement(); 
-		if (!(element instanceof IPackageFragment)) {
-			element = element.getAncestor(IJavaElement.PACKAGE_FRAGMENT);
-		}
-		
-		DiagramEditor editor = DiagramEditor.getActiveEditor();
-		
-		try {
-			editor = DiagramEditor.createEditor(new StructuredSelection(element));
-		} catch (JavaModelException e) {
-			e.printStackTrace();
-		}
-				*/
 		for (IJavaElement element1
 				: new IterableSelection<IJavaElement>(ss)) {
 			// If current editor's project is not set, add to it.
@@ -104,6 +89,4 @@ public class OpenNewEditorAction implements IActionDelegate {
 		}
 	}
 
-	public OpenNewEditorAction() {
-	}
 }

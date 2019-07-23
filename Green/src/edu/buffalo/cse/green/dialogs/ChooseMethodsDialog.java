@@ -72,6 +72,7 @@ public class ChooseMethodsDialog extends Dialog {
 	/**
 	 * @see org.eclipse.jface.dialogs.Dialog#createContents(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	protected Control createContents(final Composite parent) {
 		try {
 			

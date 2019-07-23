@@ -106,6 +106,7 @@ public class EditFiltersDialog extends Dialog implements OKCancelListener {
                 fields = false;
                 methods = true;
 		        break;
+		        default:
 		}
 		
 		int visibility = _visHolder.getValue().intValue();
@@ -128,6 +129,7 @@ public class EditFiltersDialog extends Dialog implements OKCancelListener {
 	/**
 	 * @see org.eclipse.jface.dialogs.Dialog#createContents(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	protected Control createContents(Composite parent) {
 	    parent.setLayout(new GridLayout(1, false));
 	    
@@ -268,6 +270,7 @@ public class EditFiltersDialog extends Dialog implements OKCancelListener {
             case 4:
                 _visHolder.setProtectedSelected(true);
                 break;
+                default:
         }
         
         _patternText.setText(filterData.substring(5));

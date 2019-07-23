@@ -41,6 +41,7 @@ public class CompositionRecognizer extends RelationshipRecognizer {
 	/**
 	 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.Assignment)
 	 */
+	@Override
 	public boolean visit(Assignment node) {
 		if (!inConstructor()) return true;
 
@@ -56,7 +57,7 @@ public class CompositionRecognizer extends RelationshipRecognizer {
 			if (!isField(LHS)) return true;
 
 			if (eRHS.getNodeType() == CLASS_INSTANCE_CREATION) {
-				AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+				AbstractList<ASTNode> features = new ArrayList<>();
 				features.add(node.getParent());
 				features.add(getMethodDeclaration());
 				
@@ -64,7 +65,7 @@ public class CompositionRecognizer extends RelationshipRecognizer {
 				fireFoundRelationship(getCurrentType(), LHS.resolveTypeBinding(),
 						CompositionPart.class, features);
 			} else if (eRHS.getNodeType() == STRING_LITERAL) {
-				AbstractList<ASTNode> features = new ArrayList<ASTNode>();
+				AbstractList<ASTNode> features = new ArrayList<>();
 				features.add(node.getParent());
 				features.add(getMethodDeclaration());
 				
