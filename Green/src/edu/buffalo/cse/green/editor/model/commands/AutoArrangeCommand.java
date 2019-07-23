@@ -95,9 +95,10 @@ public class AutoArrangeCommand extends Command {
 			}
 		}
 		
+		//draws a tree for each class in tops
 		for(AbstractModel t : tops) {
 			if(t instanceof TypeModel) {
-				nextX = drawTree8((TypeModel) t, maxLevel, nextX);
+				nextX = drawTree((TypeModel) t, maxLevel, nextX);
 			}
 		}
 		
@@ -106,7 +107,7 @@ public class AutoArrangeCommand extends Command {
 	}
 	
 	// Draws a tree for an individual superclass
-	public int drawTree8(TypeModel top, int max, int prevX) {
+	public int drawTree(TypeModel top, int max, int prevX) {
         DiagramEditor editor = DiagramEditor.getActiveEditor();
         List<AbstractModel> allModels = getAllModels(top);
         System.out.println("AllModels: " + allModels);
@@ -141,7 +142,6 @@ public class AutoArrangeCommand extends Command {
 	public List<AbstractModel> getAllModels(TypeModel top) {
 		List<AbstractModel> c = new ArrayList<>();
 		Set<RelationshipModel> set = top.getIncomingEdges();
-		System.out.println("Outgoing: " + set);
 		int repeat = set.size();
 		
 		if(repeat != 0) {
@@ -181,6 +181,7 @@ public class AutoArrangeCommand extends Command {
 		Set<RelationshipModel> set = mod.getOutgoingEdges();
 		int repeat = set.size();
 		
+		// The method calls upon itself until it reaches an object with no outgoing edges (no subclasses)
 		if(repeat != 0) {
 			for (Iterator<RelationshipModel> it = set.iterator(); it.hasNext(); ) {
 			       RelationshipModel f = it.next();
