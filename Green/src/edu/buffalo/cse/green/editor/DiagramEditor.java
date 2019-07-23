@@ -815,18 +815,10 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette
 
 		// associate appropriate handlers with the viewer
 		_gefRootPart = new ScalableFreeformRootEditPart();
-		ZoomManager zoom = _gefRootPart.getZoomManager();
-
-		// Default zoom levels when plug-in is loaded
-		double[] zL = new double[50];
-		double sum = 0;
-		for (int i = 0; i < zL.length; i++) {
-			sum += 0.05;
-			zL[i] = sum;
-		}
-
-		zoom.setZoomLevels(zL);
-
+		
+		// Check if anything has changed in the editor viewer window
+		checkDirty();
+		
 		IAction zoomIn = new ZoomInAction(_gefRootPart.getZoomManager());
 		IAction zoomOut = new ZoomOutAction(_gefRootPart.getZoomManager());
 		getActionRegistry().registerAction(zoomIn);
