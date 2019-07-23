@@ -27,25 +27,21 @@ public class CCVisuUtil {
     static Constructor<Position> positionConstructor;
     static {
     	try {
-			positionConstructor = Position.class.getDeclaredConstructor(new Class[0]);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
+			positionConstructor = Position.class.getDeclaredConstructor((Class[])new Class[0]);
+		} catch (SecurityException | NoSuchMethodException e) {
 			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
     	positionConstructor.setAccessible(true);
     }
     static final Object[] emtpyObjectArray = new Object[0];
     
-	public static Position newPosition() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public static Position newPosition() throws InstantiationException, IllegalAccessException, InvocationTargetException {
 		return positionConstructor.newInstance(emtpyObjectArray);
 	}
-	public static Position newPosition(float x, float y) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public static Position newPosition(float x, float y) throws InstantiationException, IllegalAccessException, InvocationTargetException {
 		return newPosition(x,y,0);
 	}
-	public static Position newPosition(float x, float y, float z) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public static Position newPosition(float x, float y, float z) throws InstantiationException, IllegalAccessException, InvocationTargetException {
 		Position pos = newPosition();
 		pos.x=x;
 		pos.y=y;

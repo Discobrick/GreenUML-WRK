@@ -47,7 +47,7 @@ public class RemoveTypeCommand extends Command {
 	 * @see org.eclipse.gef.commands.Command#undo()
 	 */
 	public void undo() {
-		RootModel root = (RootModel) _typeModel.getParent();
+		RootModel root = _typeModel.getParent();
 		TypeModel newTypeModel = root.createTypeModel(_typeModel.getType());
 		newTypeModel.setLocation(_typeModel.getLocation());
 		_typeModel = newTypeModel;

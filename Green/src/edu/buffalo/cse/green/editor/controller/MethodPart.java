@@ -45,7 +45,7 @@ public class MethodPart extends MemberPart {
 		f.setFont(PlugIn.getFontPreference(P_FONT, false));
 
 		// map the model to its appropriate type EditPart
-		RootPart root = (RootPart) getRootPart();
+		RootPart root = getRootPart();
 		root.mapModelToEditPart((AbstractModel) getModel(), this);
 		f.setOpaque(true);
 
@@ -125,7 +125,7 @@ public class MethodPart extends MemberPart {
 			font.dispose();
 			
 			// create the new font
-			TypeModel typeModel = (TypeModel) model().getParent().getParent();
+			TypeModel typeModel = model().getParent().getParent();
 			boolean italic = (model().isAbstract() && !typeModel.isInterface());
 			getFigure().setFont(PlugIn.getFontPreference(P_FONT, italic));
 		} catch (JavaModelException e) {

@@ -72,7 +72,7 @@ public class RefactorRenameParticipant extends RenameParticipant {
 	 * @see org.eclipse.ltk.core.refactoring.participants.RefactoringParticipant#createChange(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public Change createChange(IProgressMonitor pm) throws CoreException, OperationCanceledException {
+	public Change createChange(IProgressMonitor pm) throws CoreException {
 		if(!(getProcessor() instanceof RenameProcessor)) {
 			return null;
 		}

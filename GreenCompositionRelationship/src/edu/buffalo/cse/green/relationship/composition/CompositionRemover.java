@@ -41,8 +41,8 @@ public class CompositionRemover extends RelationshipRemover {
 	 * @see edu.buffalo.cse.green.relationships.RelationshipRemover#init()
 	 */
 	protected void init() {
-		lEXP = new ArrayList<ExpressionStatement>();
-		lFIE = new ArrayList<IField>();
+		lEXP = new ArrayList<>();
+		lFIE = new ArrayList<>();
 	}
 
 	/**
@@ -87,6 +87,7 @@ public class CompositionRemover extends RelationshipRemover {
 	/**
 	 * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.ExpressionStatement)
 	 */
+	@Override
 	public boolean visit(ExpressionStatement node) {
 		if (getMatcher().match(node, getRelationship().getFeatures().get(0))) {
 			lEXP.add(node);

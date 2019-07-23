@@ -30,7 +30,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 import edu.buffalo.cse.green.PlugIn;
-import edu.buffalo.cse.green.editor.DiagramEditor;
 import edu.buffalo.cse.green.editor.model.AbstractModel;
 import edu.buffalo.cse.green.editor.model.MemberModel;
 import edu.buffalo.cse.green.editor.view.IIconHolder;
@@ -65,7 +64,7 @@ public abstract class MemberPart extends AbstractPart {
 	 * @return The part's corresponding javadoc.
 	 */
 	private String getJavaDoc() {
-		final IMember element = (IMember) model().getJavaElement();
+		final IMember element = model().getJavaElement();
 		int type = element.isBinary() ? CLASS_FILE : COMPILATION_UNIT;
 		
 		CompilationUnit cu = getEditor().getCompilationUnit(element.getAncestor(type));

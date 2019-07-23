@@ -89,6 +89,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ConnectionRouter;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -138,7 +139,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
 import org.eclipse.jdt.internal.ui.JavaPluginImages;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -184,6 +184,7 @@ import edu.buffalo.cse.green.PlugIn;
 import edu.buffalo.cse.green.constants.PluginConstants;
 import edu.buffalo.cse.green.editor.action.ContextAction;
 import edu.buffalo.cse.green.editor.action.Submenu;
+import edu.buffalo.cse.green.editor.action.ZoomFitAction;
 import edu.buffalo.cse.green.editor.controller.AbstractPart;
 import edu.buffalo.cse.green.editor.controller.RelationshipPart;
 import edu.buffalo.cse.green.editor.controller.RootPart;
@@ -197,7 +198,6 @@ import edu.buffalo.cse.green.editor.model.commands.CreateBendpointCommand;
 import edu.buffalo.cse.green.editor.save.ISaveFormat;
 import edu.buffalo.cse.green.editor.view.RelationshipFigure;
 import edu.buffalo.cse.green.editor.view.RootFigure;
-import edu.buffalo.cse.green.logging.UmlLog;
 import edu.buffalo.cse.green.relationships.RelationshipCache;
 import edu.buffalo.cse.green.relationships.RelationshipGroup;
 import edu.buffalo.cse.green.relationships.RelationshipRecognizer;
@@ -224,7 +224,7 @@ import edu.buffalo.cse.green.xml.XMLNode;
 public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 		CommandStackEventListener, ISelectionProvider {
 	static {
-		_editors = new ArrayList<DiagramEditor>();
+		_editors = new ArrayList<>();
 	}
 
 //	private boolean _ignoreMenuSelection = false;
@@ -303,13 +303,13 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	public DiagramEditor() {
 		updateConnectionRouter();
 		_editors.add(this);
-		_bendpoints = new ArrayList<BendpointInformation>();
+		_bendpoints = new ArrayList<>();
 		setEditDomain(new DefaultEditDomain(this));
 		getCommandStack().addCommandStackEventListener(this);
 		getCommandStack().setUndoLimit(100);
 		_root = new RootModel();
 		_cuMap = new CompilationUnitMap();
-		_filters = new ArrayList<Filter>();
+		_filters = new ArrayList<>();
 		ACTIVE_EDITOR = this; //Fixes null pointers
 
 		getPalettePreferences().setPaletteState(FlyoutPaletteComposite.STATE_PINNED_OPEN);	
@@ -532,7 +532,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 */
 	public static DiagramEditor findProjectEditor(IJavaProject project) {
 		for (int x = 0; x < _editors.size(); x++) {
-			DiagramEditor editor = (DiagramEditor) _editors.get(x);
+			DiagramEditor editor = _editors.get(x);
 			IJavaProject editorProject = editor.getProject();
 			if (editorProject == null) continue;
 			
@@ -628,6 +628,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditor#initializeGraphicalViewer()
 	 */
+	@Override
 	protected void initializeGraphicalViewer() {
 		// associate Green's model and controller with the editor
 		getGraphicalViewer().setContents(getRootModel());
@@ -768,6 +769,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
 	 */
+	@Override
 	public boolean isSaveAsAllowed() {
 		return true;
 	}
@@ -802,22 +804,37 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditor#configureGraphicalViewer()
 	 */
+	@Override
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
 		ScrollingGraphicalViewer viewer = (ScrollingGraphicalViewer)getGraphicalViewer();
-
+		
+		
 		// Scroll-wheel Zoom
 		getGraphicalViewer().setProperty(MouseWheelHandler.KeyGenerator.getKey(SWT.MOD1), 
-				MouseWheelZoomHandler.SINGLETON);		
+				MouseWheelZoomHandler.SINGLETON);
 		
 		// associate appropriate handlers with the viewer
 		_gefRootPart = new ScalableFreeformRootEditPart();
 		ZoomManager zoom = _gefRootPart.getZoomManager();
-		List<String> zoomLevels = new ArrayList<String>(3);
-		zoomLevels.add(ZoomManager.FIT_ALL);
-		zoomLevels.add(ZoomManager.FIT_WIDTH);
-		zoomLevels.add(ZoomManager.FIT_HEIGHT);
-		zoom.setZoomLevelContributions(zoomLevels);
+
+		// Default zoom levels when plug-in is loaded
+		double []zL = new double[50];
+		double sum = 0;
+		for(int i = 0; i < zL.length; i++) {
+			sum += 0.05;
+			zL[i]=sum;
+		}
+		
+		zoom.setZoomLevels(zL);
+
+		/* Code that was written before adaptive zoom
+			//List<String> zoomLevels = new ArrayList<String>(3);
+			//zoomLevels.add(ZoomManager.FIT_ALL);
+			//zoomLevels.add(ZoomManager.FIT_WIDTH);
+			//zoomLevels.add(ZoomManager.FIT_HEIGHT);
+			//zoom.setZoomLevelContributions(zoomLevels); 
+		*/
 		IAction zoomIn = new ZoomInAction(_gefRootPart.getZoomManager());
 		IAction zoomOut = new ZoomOutAction(_gefRootPart.getZoomManager());
 		getActionRegistry().registerAction(zoomIn);
@@ -856,19 +873,20 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 */
 	public void addKeyAction(char key, ContextAction action) {
 		_sharedKeyHandler.put(KeyStroke.getPressed(key, key, 0), action);
+		System.out.println(action.getAccelerator());
 	}
 
 	/**
 	 * @see org.eclipse.gef.ui.parts.GraphicalEditorWithPalette#getPaletteRoot()
 	 */
 	protected PaletteRoot getPaletteRoot() {
-		PaletteRoot pRoot = DiagramPaletteFactory.createPaletteRoot( );
-		return pRoot;
+		return DiagramPaletteFactory.createPaletteRoot();
 	}
 
 	/**
 	 * @see org.eclipse.ui.IWorkbenchPart#setFocus()
 	 */
+	@Override
 	public void setFocus() {
 		ACTIVE_EDITOR = this;
 
@@ -904,7 +922,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	 * @return a reference to the opened editor, if successful.
 	 */
 	private static DiagramEditor createEditor(
-			IJavaElement element) throws JavaModelException {
+			IJavaElement element){ 
 		IWorkbenchWindow dwindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		IWorkbenchPage workbenchPage = dwindow.getActivePage();
@@ -947,12 +965,9 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 					workbenchPage, diaFile, true);
 			ACTIVE_EDITOR = editor;
 			return editor;
-		} catch (CoreException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (CoreException | IOException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -1020,6 +1035,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
+	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		if (selection.isEmpty()) { return; }
 		super.selectionChanged(part, selection);
@@ -1059,21 +1075,88 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.gef.commands.CommandStackListener#commandStackChanged(java.util.EventObject)
 	 */
+	@Override
 	public void commandStackChanged(EventObject event) {
 		super.commandStackChanged(event);
 		checkDirty();
 	}
 
 	/**
-	 * Checks to see if there were any changes to the editor
+	 * Checks to see if there were any changes to the editor and adjusts the zoom
+	 * according to layouts changes (moved class boxes)
 	 */
 	public void checkDirty() {
+		DiagramEditor activeEditor = DiagramEditor.getActiveEditor();
+		ZoomManager zoom = _gefRootPart.getZoomManager();
+		List<RelationshipModel> allRels = activeEditor.getRootModel().getRelationships();
+		List<AbstractModel> allModels = activeEditor.getRootModel().getChildren();
+		Rectangle viewSize = activeEditor.getSize();
+		
+		int hMin = 9999;
+		int hMax = 0;
+		int vMin = 9999;
+		int vMax = 0;
+		
+		for(AbstractModel m : allModels) {
+			IFigure f = activeEditor.getRootPart().getPartFromModel(m).getFigure();
+
+			if(allRels.contains(m)) {
+				//Necessary because this method of obtaining the figure's dimension
+				//is inaccurate for relationships.
+				continue;
+			}
+
+			Dimension dim = m.getSize();
+			if(dim.height == -1 && dim.width == -1) {
+				//Box is default size, need to get real size instead.
+				dim = f.getLayoutManager().getPreferredSize(f.getParent(), -1, -1);
+			}
+			
+			int mLeft = m.getLocation().x;
+			int mRight = mLeft + dim.width;
+			int mTop = m.getLocation().y;
+			int mBottom = mTop + dim.height;
+			
+			if(mLeft < hMin) hMin = mLeft;
+			if(mRight > hMax) hMax = mRight;
+			if(mTop < vMin) vMin = mTop;
+			if(mBottom > vMax) vMax = mBottom;
+		}
+		
+		//viewSize.width/height is the editor window size + scroll bars (17 pixels wide)
+		// gets zoom level that fits all layout in the viewer taking in account only width
+		double widthScale = ((double)(viewSize.width - 17) / (hMax - hMin));
+		// gets zoom level that fits all layout in the viewer taking in account only height
+		double heightScale = ((double)(viewSize.height - 17) / (vMax - vMin));
+		
+		
+		// The bigger the zoom level, the closer it will zoom.
+		
+		// Array to hold total of 50 zoom level values
+		double []zoomLevel = new double[50];
+		
+		// Determines which of the two is bigger, height or width. If the width is bigger
+		// then max zoom-out is set to be maximum regarding width and vise versa
+		// smaller zoom means u are zoomed out more, that is why smallest of two is taken.
+		double sum = Math.min(widthScale, heightScale);
+		
+		// Zoom levels start from maximum possible zoom that is determined by width or 
+		// height of the layout
+		for(int i = 0; i < zoomLevel.length; i++) {
+			zoomLevel[i]=sum;
+			sum += 0.05;
+		}	
+		
+		// sets newly acquired zoom levels according to layout changes
+		zoom.setZoomLevels(zoomLevel);
+		
 		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isSaveOnCloseNeeded()
 	 */
+	@Override
 	public boolean isSaveOnCloseNeeded() {
 		return isDirty();
 	}
@@ -1081,6 +1164,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#isDirty()
 	 */
+	@Override
 	public boolean isDirty() {
 		return getCommandStack().isDirty();
 	}
@@ -1168,6 +1252,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 	/**
 	 * @see org.eclipse.ui.part.WorkbenchPart#setPartName(java.lang.String)
 	 */
+	@Override
 	public void setPartName(String partName) {
 		super.setPartName(partName);
 	}
@@ -1223,8 +1308,7 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 		}
 		
 		// write the contents into the file (perform the save)
-		try {
-			FileWriter fWriter = new FileWriter(file);
+		try(FileWriter fWriter = new FileWriter(file)){			
 			PrintWriter pWriter = new PrintWriter(fWriter);
 			pWriter.println(contents);
 			pWriter.close();
@@ -1555,8 +1639,6 @@ public class DiagramEditor extends GraphicalEditorWithFlyoutPalette implements
 
 	@Override
 	public void stackChanged(CommandStackEvent event) {
-		// TODO Auto-generated method stub
-		//super.stackChanged(event);
 		checkDirty();
 	}
 }
@@ -1909,13 +1991,10 @@ class DiagramEditorFilePolicies {
 			
 			fReader.read(fileContents);
 			fReader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
-		}
+		} 
 		
 		if (fileContents.length < 5) {
 			// file is "empty" - no error
@@ -1931,7 +2010,7 @@ class DiagramEditorFilePolicies {
 		}
 		
 		if (node.getChildren().size() == 0) { return; }
-		parent = (XMLNode) node.getChild(XML_UML);
+		parent = node.getChild(XML_UML);
 		
 		PlugIn.runWithoutRecognizers(new Runnable() {
 			/**
@@ -2061,10 +2140,7 @@ class DiagramEditorFilePolicies {
 				
 					filePath = PlugIn.getWorkspaceRoot().getFile(
 							editor.getCurrentFile().getFullPath()).getLocation();
-				} catch (CoreException e) {
-					e.printStackTrace();
-					return;
-				} catch (IOException e) {
+				} catch (CoreException | IOException e) {
 					e.printStackTrace();
 					return;
 				}

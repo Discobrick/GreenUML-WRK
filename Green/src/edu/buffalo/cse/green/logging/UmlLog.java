@@ -17,7 +17,7 @@ public class UmlLog {
 	}
 	
 	
-	public void addToLog(String message) throws IOException, SecurityException {
+	public void addToLog(String message) throws IOException {
 		FileHandler fh = new FileHandler(_fileName, true);  // Throws.
 		fh.setFormatter(new SimpleFormatter()); 
 		
