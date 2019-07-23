@@ -45,7 +45,7 @@ import sun.reflect.Reflection;
 
 /**
  * @author zgwang
- *
+ * 
  */
 public class AutoArrangeCommand extends Command {
 
@@ -71,7 +71,8 @@ public class AutoArrangeCommand extends Command {
 	}
 	
 	
-	/* This method creates a diagram suited for tree-like structures 
+	/* 
+	 * This method creates a diagram suited for tree-like structures 
 	 * by drawing trees one by one.
 	 */
 	public void execute() {
@@ -106,7 +107,13 @@ public class AutoArrangeCommand extends Command {
 		
 	}
 	
-	// Draws a tree for an individual superclass
+	/**
+	 * 
+	 * @param top 	 - the parent class (root) of the tree
+	 * @param max	 - maximum depth
+	 * @param prevX  - the tree will add a space between this coordinate and then place itself there
+	 * @return the furthest x coordinate the tree occupies
+	 */
 	public int drawTree(TypeModel top, int max, int prevX) {
         DiagramEditor editor = DiagramEditor.getActiveEditor();
         List<AbstractModel> allModels = getAllModels(top);
@@ -138,7 +145,11 @@ public class AutoArrangeCommand extends Command {
         return nextX;
 }
 	
-	// returns the given superclass model and all of its subclass models
+	/**
+	 * 
+	 * @param top - the parent class
+	 * @return a list containing the given class and all extentions of it and their subclasses
+	 */
 	public List<AbstractModel> getAllModels(TypeModel top) {
 		List<AbstractModel> c = new ArrayList<>();
 		Set<RelationshipModel> set = top.getIncomingEdges();
@@ -158,7 +169,9 @@ public class AutoArrangeCommand extends Command {
 		return c;
 	}
 	
-	// Finds the maximum level(depth) out of a list of TypeModels
+	/**
+	 * @return the maximum depth of all of these models (used when arranging it as a tree structure)
+	 */
 	public int getMaxLevel(List<AbstractModel> list) {
 		int maxLevel = 0;
 		
@@ -174,7 +187,10 @@ public class AutoArrangeCommand extends Command {
 		return maxLevel;
 	}
 	
-	// Finds the level(depth) for a single TypeModel
+	/**
+	 * @param mod - the model
+	 * @return the level(depth) of a single TypeModel
+	 */
 	public int getLevel(TypeModel mod) {
 		
 		int maxLevel = 0;
