@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -29,6 +30,28 @@ import edu.buffalo.cse.green.editor.model.RelationshipModel;
  * @author zgwang
  */
 public class ZoomFitAction extends ContextAction {
+	
+	private double widthScale;
+	private double heightScale;
+	
+	
+	public double getWidthScale() {
+		return widthScale;
+	}
+
+	public void setWidthScale(double widthScale) {
+		this.widthScale = widthScale;
+	}
+
+	public double getHeightScale() {
+		return heightScale;
+	}
+
+	public void setHeightScale(double heightScale) {
+		this.heightScale = heightScale;
+	}
+
+	
 	
 	/**
 	 * Constructor
@@ -102,10 +125,27 @@ public class ZoomFitAction extends ContextAction {
 		}
 		
 		//viewSize.width/height is the editor window size + scroll bars (17 pixels wide)
-		double widthScale = (double)(viewSize.width - 17) / (hMax - hMin);
-		double heightScale = (double)(viewSize.height - 17) / (vMax - vMin); 
-
-		DiagramEditor.getActiveEditor().getZoomManager().setZoom(Math.min(widthScale, heightScale));
+		setWidthScale((double)(viewSize.width - 17) / (hMax - hMin));
+		setHeightScale((double)(viewSize.height - 17) / (vMax - vMin)); 
+		
+		// Array to hold total of 50 zoom level values
+				double []zoomLevel = new double[50];
+		// Determines which of the two is bigger, height or width. If the width is bigger
+				// then max zoom-out is set to be maximum regarding width and vise versa
+				// smaller zoom means u are zoomed out more, that is why smallest of two is taken.
+				double sum = Math.min(widthScale, heightScale);
+				
+				// Zoom levels start from maximum possible zoom that is determined by width or 
+				// height of the layout
+				for(int i = 0; i < zoomLevel.length; i++) {
+					zoomLevel[i]=sum;
+					sum += 0.05;
+				}	
+				
+				// sets newly acquired zoom levels according to layout changes
+				DiagramEditor.getActiveEditor().getZoomManager().setZoomLevels(zoomLevel);
+				
+		DiagramEditor.getActiveEditor().getZoomManager().setZoom(Math.min(getWidthScale(), getHeightScale()));
 	}
 
 	/**
