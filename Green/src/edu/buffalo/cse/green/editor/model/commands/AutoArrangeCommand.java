@@ -182,14 +182,15 @@ public class AutoArrangeCommand extends Command {
 	        int maxLevel = getMaxLevel(mods);
 	        int[] posX = new int[maxLevel+1];
 	        
-	       	    	        
-	        System.out.println("MaxLevel: " + maxLevel);
-	        
 	        for (AbstractModel m : mods) {
 	            if (m instanceof TypeModel) {
 	            	int lvl = getLevel((TypeModel)m);
 	            	int level = maxLevel - lvl;
+<<<<<<< HEAD
 	            	System.out.println(m.getClass().getSimpleName() + " level: " + level);
+=======
+
+>>>>>>> branchDa
 	            	m.setSize(200, 100);
 	            	m.setLocation(posX[level], (level * (-150)));
 	            	posX[level] += 300;
@@ -201,6 +202,95 @@ public class AutoArrangeCommand extends Command {
 	
 	}
 	
+<<<<<<< HEAD
+=======
+	public void execute() {
+		DiagramEditor editor = DiagramEditor.getActiveEditor();
+        RootModel root = editor.getRootModel();
+		List<AbstractModel> children = root.getChildren();
+
+		int maxLevel = getMaxLevel(children);
+		List<TypeModel> tops = new ArrayList<>();
+		int nextX = 0;
+		List<String> classes = new ArrayList<>();
+		
+		for(AbstractModel mod : children) {
+			if(mod instanceof TypeModel) {
+				try {
+					if((((TypeModel) mod).getType().getSuperclassName()) == null) {
+						tops.add((TypeModel) mod);
+					}
+				} catch (JavaModelException e) {
+				}
+			}
+		}
+		
+		
+		for(AbstractModel t : tops) {
+			if(t instanceof TypeModel) {
+
+				nextX = drawTree8((TypeModel) t, maxLevel, nextX);
+			}
+		}
+		
+		editor.checkDirty();
+		
+	}
+	
+	
+	public int drawTree8(TypeModel top, int max, int prevX) {
+        DiagramEditor editor = DiagramEditor.getActiveEditor();
+        List<AbstractModel> allModels = getAllModels(top);
+        int[] xPos = new int[max + 1];
+        Arrays.fill(xPos, (prevX + 100));
+        int nextX = 0;
+           	    	        
+
+        
+        for (AbstractModel m : allModels) {
+            if (m instanceof TypeModel) {
+            	int lvl = getLevel((TypeModel)m);
+            	int level = max - lvl;
+
+            	m.setSize(200, 100);
+            	m.setLocation(xPos[level], (level * (-150)));
+            	xPos[level] += 300;
+            }
+        }
+        
+        for(int i = 0; i < xPos.length; i++) {
+        	if(xPos[i] > nextX)
+        		nextX = xPos[i];
+        }
+ 
+
+        editor.checkDirty();
+        return nextX;
+
+}
+	
+	public List<AbstractModel> getAllModels(TypeModel top) {
+		List<AbstractModel> c = new ArrayList<>();
+		Set<RelationshipModel> set = top.getIncomingEdges();
+
+		int repeat = set.size();
+		
+		if(repeat != 0) {
+			for (Iterator<RelationshipModel> it = set.iterator(); it.hasNext(); ) {
+			       RelationshipModel f = it.next();
+			       List<AbstractModel> temp = (getAllModels(f.getSourceModel()));
+			       	for(AbstractModel m : temp) {
+			       		c.add(m);
+			       	}
+			   }
+			 
+		}
+		else {}
+		c.add(top);
+		return c;
+	}
+	
+>>>>>>> branchDa
 	// Finds the maximum depth out of a list of TypeModels
 	public int getMaxLevel(List<AbstractModel> list) {
 		int maxLevel = 0;
