@@ -50,7 +50,7 @@ public class NewClassWizard extends NewElementWizard {
 		super.addPages();
 		_fPage = new NewClassWizardPage() {
 			
-//TODO This is also part of the JavaDoc code
+// This is also part of the JavaDoc code
 //			@Override
 //			protected String getTypeComment( ICompilationUnit parentCU, String lineDelimiter ) {
 //				String result = "/**" + lineDelimiter;

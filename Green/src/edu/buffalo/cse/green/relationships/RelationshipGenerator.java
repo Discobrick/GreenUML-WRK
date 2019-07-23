@@ -208,9 +208,7 @@ public abstract class RelationshipGenerator extends RelationshipVisitor {
 			}
 			
 			organizeImports(_sourceType);
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		} catch (JavaModelException e) {
+		} catch (BadLocationException | JavaModelException e) {
 			e.printStackTrace();
 		}
 	}
@@ -361,7 +359,7 @@ public abstract class RelationshipGenerator extends RelationshipVisitor {
 	 * @param node - The node to traverse.
 	 * @return True if processing should continue, false otherwise.
 	 */
-	protected abstract boolean process(Block node);
+	protected abstract void process(Block node);
 
 	/**
 	 * @return True if blocks should be traversed, false otherwise.

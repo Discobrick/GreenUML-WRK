@@ -154,7 +154,7 @@ implements ConnectionEditPart, PropertyChangeListener,
 	public void activate() {
 		if (getParent() != null) {
 			super.activate();
-			_root = (RootPart) getRootPart();
+			_root = getRootPart();
 			updateSourceAnchor();
 			updateTargetAnchor();
 			
@@ -413,7 +413,7 @@ implements ConnectionEditPart, PropertyChangeListener,
 	 * edu.buffalo.cse.green.editor.controller.MethodPart#updateFont(final MethodModel model)
 	 */
 	private void updateFontHelper() {
-		if (_ignoreNextUpdateRequest == true) {
+		if (_ignoreNextUpdateRequest) {
 			_ignoreNextUpdateRequest = false;
 			return;
 		}
