@@ -28,7 +28,7 @@ CCVisu methods are used in the default layout method in order to arrange the gra
 
 #### Changing the layout
 
-Instead of adding the models to some kind of panel, all that needs to be done in order to update the layout is to change the properties of the models (for example, the position) and check for changes in the editor.
+Instead of adding the models to some kind of panel, all that needs to be done in order to update the layout is to change the properties of the models (for example, the position) and check for changes in the editor (by using the checkDirty method).
 
 #### Bugs
 
