@@ -13,6 +13,9 @@
  */
 package edu.buffalo.cse.green.editor.model.commands;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -34,6 +37,7 @@ import ccvisu.Options;
 import edu.buffalo.cse.green.ccvisu.CCVisuUtil;
 import edu.buffalo.cse.green.ccvisu.GraphVertex;
 import edu.buffalo.cse.green.editor.DiagramEditor;
+import edu.buffalo.cse.green.editor.action.ZoomFitAction;
 import edu.buffalo.cse.green.editor.model.AbstractModel;
 import edu.buffalo.cse.green.editor.model.CompartmentModel;
 import edu.buffalo.cse.green.editor.model.FieldModel;
@@ -227,6 +231,15 @@ public class AutoArrangeCommand extends Command {
 		}
 		
 		editor.checkDirty();
+		try {
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_A);
+	        robot.keyRelease(KeyEvent.VK_A);
+	        
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
