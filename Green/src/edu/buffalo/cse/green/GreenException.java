@@ -22,6 +22,7 @@ import edu.buffalo.cse.green.types.ITypeProperties;
  * @author bcmartin
  * @author rjtruban
  */
+// llulululu git tests - rainers
 public class GreenException extends RuntimeException {
 	protected static final long serialVersionUID = -760398655607581288L;
 

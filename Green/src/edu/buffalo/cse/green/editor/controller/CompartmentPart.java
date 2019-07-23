@@ -58,9 +58,7 @@ public class CompartmentPart extends AbstractPart {
 	/**
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#createEditPolicies()
 	 */
-	protected void createEditPolicies() {
-		super.createEditPolicies();
-	}
+	
 
 	/**
 	 * @see edu.buffalo.cse.green.editor.controller.AbstractPart#getDeleteCommand()

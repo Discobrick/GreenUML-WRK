@@ -188,9 +188,8 @@ public abstract class GraphicalEditorPallete extends Graphedit {
 			if (splitter != null)
 				splitter.setExternalViewer(null);
 			super.dispose();
-		}public class GraphicalEditorFlyoutPallete {
-
-}
+		}
+		//public class GraphicalEditorFlyoutPallete {}
 
 
 		/**

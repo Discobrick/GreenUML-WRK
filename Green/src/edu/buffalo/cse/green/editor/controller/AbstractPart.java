@@ -287,13 +287,7 @@ public abstract class AbstractPart extends AbstractGraphicalEditPart {
 		
 		try {
 			return (IFigure) constructor[0].newInstance();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			return null;
-		} catch (InvocationTargetException e) {
+		} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
 		}

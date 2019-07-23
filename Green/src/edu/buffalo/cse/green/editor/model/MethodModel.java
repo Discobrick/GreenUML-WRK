@@ -53,7 +53,7 @@ public class MethodModel extends MemberModel<AbstractModel, CompartmentModel, IM
 	 * @return The <code>IMethod</code> modeled by this class.
 	 */
 	public IMethod getMethod() {
-		return (IMethod) getMember();
+		return getMember();
 	}
 
 	/**

@@ -12,19 +12,15 @@ package edu.buffalo.cse.green.editor.save;
 
 import static edu.buffalo.cse.green.GreenException.GRERR_FILE_NOT_FOUND;
 
-import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.awt.image.IndexColorModel;
 import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.swt.graphics.Image;
 
 import edu.buffalo.cse.green.GreenException;
 import edu.buffalo.cse.green.editor.DiagramEditor;
-import edu.buffalo.cse.green.logging.UmlLog;
 import edu.buffalo.cse.green.util.ImageWriterFile;
 
 

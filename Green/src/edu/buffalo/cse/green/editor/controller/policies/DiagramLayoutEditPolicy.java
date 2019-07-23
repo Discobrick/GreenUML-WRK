@@ -44,6 +44,7 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
 	/**
 	 * @see org.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#createAddCommand(org.eclipse.gef.EditPart, java.lang.Object)
 	 */
+	@Deprecated
 	protected Command createAddCommand(EditPart child, Object constraint) {
 		return null;
 	}
@@ -51,6 +52,7 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
 	/**
 	 * @see org.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
 	 */
+	@Deprecated
 	protected Command createChangeConstraintCommand(
 			EditPart child,
 			Object constraint) {
@@ -94,7 +96,6 @@ public class DiagramLayoutEditPolicy extends XYLayoutEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.LayoutEditPolicy#getDeleteDependantCommand(org.eclipse.gef.Request)
 	 */
 	protected Command getDeleteDependantCommand(Request request) {
-		Command dc = _deleteListener.getDeleteCommand();
-		return dc;
+		return _deleteListener.getDeleteCommand();
 	}
 }

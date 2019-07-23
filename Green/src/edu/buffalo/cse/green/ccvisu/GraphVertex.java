@@ -33,5 +33,5 @@ public class GraphVertex extends ccvisu.GraphVertex {
 	  return (o instanceof GraphVertex) && ((GraphVertex)o).me == me;
   }
 
-};
+}
 

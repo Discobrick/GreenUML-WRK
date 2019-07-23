@@ -33,6 +33,7 @@ public class AssociationGenerator extends CardinalRelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#needChooseTypeDialog()
 	 */
+	@Override
 	protected boolean needChooseTypeDialog() {
 		return false;
 	}
@@ -40,9 +41,9 @@ public class AssociationGenerator extends CardinalRelationshipGenerator {
 	/**
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#process(org.eclipse.jdt.core.dom.Block)
 	 */
-	protected boolean process(Block node) {
-		if (!correctTypeToGenerate()) return true;
-		if (!inConstructor()) return true;
+	protected void process(Block node) {
+		if (!correctTypeToGenerate()) return;
+		if (!inConstructor()) return;
 		generateFields();
 			
 		List<Statement> statements = (AbstractList<Statement>) node
@@ -101,9 +102,8 @@ public class AssociationGenerator extends CardinalRelationshipGenerator {
 				getLocalDeclarations().add(paramName);
 			}
 		}
-		
-		return true;
-	}
+	} 
+	
 
 	/* (non-Javadoc)
 	 * @see edu.buffalo.cse.green.relationships.RelationshipGenerator#needConstructor()
