@@ -1,0 +1,39 @@
+<uml>
+   <greenVersion="40600"/>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green{GreenException.java[GreenException"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="0"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green{GreenException.java[GreenFileException"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="200"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green{GreenException.java[IllegalOperationException"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="400"/>
+      <y="0"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
+      <sourceType="=Green/src<edu.buffalo.cse.green{GreenException.java[IllegalOperationException"/>
+      <targetType="=Green/src<edu.buffalo.cse.green{GreenException.java[GreenException"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
+      <sourceType="=Green/src<edu.buffalo.cse.green{GreenException.java[GreenFileException"/>
+      <targetType="=Green/src<edu.buffalo.cse.green{GreenException.java[GreenException"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+</uml>
+

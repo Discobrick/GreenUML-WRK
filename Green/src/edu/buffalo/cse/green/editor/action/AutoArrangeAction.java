@@ -26,28 +26,33 @@ import edu.buffalo.cse.green.editor.model.commands.AutoArrangeCommand;
  */
 public class AutoArrangeAction extends ContextAction {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#doRun()
 	 */
 	@Override
 	protected void doRun() throws JavaModelException {
 		DiagramEditor editor = DiagramEditor.getActiveEditor();
-		
+
 		editor.execute(new AutoArrangeCommand());
 	}
 
 	/**
-	 * Calculates the actual size of a figure whose size parameters
-	 * are specified as (-1, -1) so that it sizes to its contents.
+	 * Calculates the actual size of a figure whose size parameters are specified as
+	 * (-1, -1) so that it sizes to its contents.
 	 * 
-	 * @param fig Given figure
+	 * @param fig
+	 *            Given figure
 	 * @return true dimension of the given figure
 	 */
 	private Dimension getRealSize(IFigure fig) {
 		return null;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#getLabel()
 	 */
 	@Override
@@ -55,15 +60,19 @@ public class AutoArrangeAction extends ContextAction {
 		return "Auto-Arrange Diagram";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#getPath()
 	 */
 	@Override
 	public Submenu getPath() {
-		return Submenu.AutoArrange;//Invisible;//None;
+		return Submenu.AutoArrange;// Invisible;//None;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#getSupportedModels()
 	 */
 	@Override
@@ -71,12 +80,14 @@ public class AutoArrangeAction extends ContextAction {
 		return CM_EDITOR;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.buffalo.cse.green.editor.action.ContextAction#isEnabled()
 	 */
 	@Override
 	public boolean isEnabled() {
-		//This is bad, replace this
+		// This is bad, replace this
 		return true;
 	}
 

@@ -1,0 +1,25 @@
+<uml>
+   <greenVersion="40600"/>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green.action{IncrementalInNewEditorAction.java[IncrementalInNewEditorAction"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="0"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green.action{OpenNewEditorAction.java[OpenNewEditorAction"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="200"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=Green/src<edu.buffalo.cse.green.action{AddJavaFileAction.java[AddJavaFileAction"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="400"/>
+      <y="0"/>
+   </type>
+</uml>
+
