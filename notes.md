@@ -10,8 +10,8 @@ For future contributers, the project has very little comments and method descrip
 
 A new layout option has been added. This layout is suited for tree-like structures (for example, showing child classes of a superclass). For more complex diagrams, the old AutoLayout option is preferred, but this new option can make simpler diagrams more comprehensible.
 
-Auto layout can be called using hotkeys "l" or "k". "l" arranges using tree-structure. "k" arranges using graph structure. Auto layout can also be called using mouse: right click > AutoArrange > Auto-Arrange diagram.
-When right Auto-Arrange command is called either by hotkeys or mouse clicks, it rearranges the class boxes and adjusts the maximum possible zoom out.
+Auto layout can be called using hotkeys "l" or "k". "l" arranges the diagram using tree-structure. "k" arranges the diagram using graph structure. Auto layout can also be called using the mouse: right click > AutoArrange > Auto-Arrange diagram.
+When the respective Auto-Arrange command is called either by hotkeys or mouse clicks, it rearranges the class boxes and adjusts the maximum possible zoom out.
 
 This method works by finding all classes that are not subclasses of another class present in the diagram. For each of these classes, another method is called which organizes its model (and its child models) into a single tree like structure. The trees are created individually so that child classes can be as close as possible to their parent class.
 
