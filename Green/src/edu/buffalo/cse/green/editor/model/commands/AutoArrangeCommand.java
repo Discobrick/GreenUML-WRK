@@ -161,24 +161,24 @@ public class AutoArrangeCommand extends Command {
 		}
 
 		editor.checkDirty();
-		test();
+//		test();
 	}
 
-	public void test() {
-		IPreferenceStore store = PlugIn.getDefault().getPreferenceStore();
-
-		store.setValue(PreferenceInitializer.P_COLOR_NOTE, "255,255,0"); // ?
-		store.setValue(PreferenceInitializer.P_COLOR_UML, "100,100,100"); // fons
-		store.setValue(PreferenceInitializer.P_COLOR_SELECTED, "16,152,61"); // kad uzspiezh
-		store.setValue(PreferenceInitializer.P_COLOR_TYPE_BORDER, "0,0,0"); // arejas malas
-		store.setValue(PreferenceInitializer.P_COLOR_TYPE_BORDER_HIDDENR, "255,255,255"); // ?
-		store.setValue(PreferenceInitializer.P_COLOR_COMPARTMENT_BORDER, "0,0,0"); // iekseja robeza
-		store.setValue(PreferenceInitializer.P_COLOR_TYPE_TEXT, "255,255,255"); // teksts
-		store.setValue(PreferenceInitializer.P_COLOR_NOTE_BORDER, "0,0,0"); // ?
-		store.setValue(PreferenceInitializer.P_COLOR_NOTE_TEXT, "0,0,0"); // ?
-		store.setValue(PreferenceInitializer.P_COLOR_REL_ARROW_FILL, "255,255,255"); // bultas gala krasa
-		store.setValue(PreferenceInitializer.P_COLOR_REL_LINE, "0,0,0"); // bultas krasa
-		store.setValue(PreferenceInitializer.P_COLOR_REL_TEXT, "0,0,0"); // teksts pie bultam
-	}
+//	public void test() {
+//		IPreferenceStore store = PlugIn.getDefault().getPreferenceStore();
+//
+//		store.setValue(PreferenceInitializer.P_COLOR_NOTE, "255,255,0"); // ?
+//		store.setValue(PreferenceInitializer.P_COLOR_UML, "100,100,100"); // fons
+//		store.setValue(PreferenceInitializer.P_COLOR_SELECTED, "16,152,61"); // kad uzspiezh
+//		store.setValue(PreferenceInitializer.P_COLOR_TYPE_BORDER, "0,0,0"); // arejas malas
+//		store.setValue(PreferenceInitializer.P_COLOR_TYPE_BORDER_HIDDENR, "255,255,255"); // ?
+//		store.setValue(PreferenceInitializer.P_COLOR_COMPARTMENT_BORDER, "0,0,0"); // iekseja robeza
+//		store.setValue(PreferenceInitializer.P_COLOR_TYPE_TEXT, "255,255,255"); // teksts
+//		store.setValue(PreferenceInitializer.P_COLOR_NOTE_BORDER, "0,0,0"); // ?
+//		store.setValue(PreferenceInitializer.P_COLOR_NOTE_TEXT, "0,0,0"); // ?
+//		store.setValue(PreferenceInitializer.P_COLOR_REL_ARROW_FILL, "255,255,255"); // bultas gala krasa
+//		store.setValue(PreferenceInitializer.P_COLOR_REL_LINE, "0,0,0"); // bultas krasa
+//		store.setValue(PreferenceInitializer.P_COLOR_REL_TEXT, "0,0,0"); // teksts pie bultam
+//	}
 
 }
