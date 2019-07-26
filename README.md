@@ -64,7 +64,8 @@ Please note that Green UML is effectively a collection of plug-ins (see [the str
 
 ### What can be improved:
 - Better Auto layout algorithm so that it takes in account interfaces and other packages
-- Better dark mode implementation
+- Better dark mode implementation, specifically add dark more for palette
+- Add the ability to generate a diagram for a whole project, with included decompilation for .jar files
 - Additional functionality
 
 ## Bugs
