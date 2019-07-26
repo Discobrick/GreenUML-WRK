@@ -23,6 +23,8 @@ Green supports exporting files to JPG, PNG and GIF formats, as well as saving th
 ## What's new in this version
 - This Green UML version works properly on Eclipse 4.7 Oxygen
 - Fixed some discovered bugs
+- Tree Layout
+- Adaptive zoom levels
 
 ## Requirements
 Eclipse 4.7 Oxygen
@@ -61,7 +63,7 @@ Please note that Green UML is effectively a collection of plug-ins (see [the str
 - [GMF Tooling](http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases/)
 
 ### What can be improved:
-- Better Auto layout algorithm
+- Better Auto layout algorithm so that it takes in account interfaces and other packages
 - Better dark mode implementation
 - Additional functionality
 
